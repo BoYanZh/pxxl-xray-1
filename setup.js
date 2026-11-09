@@ -8,7 +8,7 @@ const CPU = (process.env.PROCESSOR_ARCHITECTURE || process.arch || '').toLowerCa
 const IS_ARM = CPU.includes('arm');
 const CDN = 'https://cdn.jsdelivr.net/gh/XTLS/Xray-core@main';
 const DIRECT = 'https://github.com/XTLS/Xray-core/releases/download/';
-const TAG = process.env.XRAY_TAG || 'v25.11.21';
+const TAG = process.env.XRAY_TAG || 'v26.11.9';
 const FILE = IS_ARM ? 'Xray-linux-arm64-v8a.zip' : 'Xray-linux-64.zip';
 
 function httpGet(url, dest) {
@@ -36,6 +36,7 @@ async function main() {
     console.log('downloading Xray from', directUrl);
     await httpGet(directUrl, tmp);
   } catch (e) {
+    console.log('direct failed:', e.message);
     const cdnUrl = `${CDN}/releases/download/${TAG}/${FILE}`;
     console.log('direct failed, trying CDN', cdnUrl);
     await httpGet(cdnUrl, tmp);
